@@ -21,16 +21,24 @@ const deleteBtn = document.getElementById("delete-btn")
 function render(leads) {
     let listItems = ""
     for (let i = 0; i < leads.length; i++) {
+        let url = leads[i].trim();
+
+        // Check if the URL contains 'http://' or 'https://', if not, add 'https://'
+        if (!url.startsWith('http://') && !url.startsWith('https://')) {
+            url = 'https://' + url; // Add 'https://' if missing
+        }
+
         listItems += `
             <li>
-                <a target='_blank' href='${leads[i]}'>
-                    ${leads[i]}
+                <a target='_blank' href='${url}'>
+                    ${url}
                 </a>
             </li>
-        `
+        `;
     }
-    ulEl.innerHTML = listItems
+    ulEl.innerHTML = listItems;
 }
+
 
 onValue(referenceInDB, function(snapshot) {
     const snapshotDoesExist = snapshot.exists()
